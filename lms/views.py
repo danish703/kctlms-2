@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 def home(request):
     return render(request,'index.html')
 
@@ -12,7 +12,7 @@ def signin(request):
         user = authenticate(username=email,password=password1)
         if user is not None:
             login(request,user)
-            return redirect('dashboard')
+            return redirect('staff_dashboard')
         else:
             messages.add_message(request,messages.ERROR,"username and password does not match")
             return redirect('signin')
@@ -40,8 +40,22 @@ def signup(request):
     else:
         return render(request,'signup.html')
 
-def dashboard(request):
+def student_dashboard(request):
     if request.user.is_authenticated:
         return render(request,'dashboard.html')
     else:
         return redirect('signin')
+
+def staff_dashboard(request):
+    if request.user.is_authenticated:
+        if request.user.is_staff==1:
+            return render(request,'superdashboard.html')
+        else:
+            return redirect('student_dashboard')
+    else:
+        return redirect('signin')
+
+
+def signout(reqeust):
+    logout(reqeust)
+    return redirect('signin')
