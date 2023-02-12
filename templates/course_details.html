@@ -1,0 +1,51 @@
+{% extends 'master.html' %}
+{% block title %}
+Super Dashbaord
+{% endblock %}
+{% block body %}
+<div class="row">
+    {% include 'partial/sidenavofsuper.html' %}
+    <div class="col-9">
+        {% include 'partial/message.html' %}
+        <h1>{{course.course_name}}</h1>
+        <span>Credit Hours: {{course.hours}} | Created at: {{course.created_at}}</span>
+        <hr/>
+         <img src="{{MEDIA_URL}}{{course.course_image.url}}" class="image">
+        <hr/>
+        <p>
+        {% autoescape off %}
+            {{course.description}}
+       {% endautoescape %}
+        </p>
+        <hr/>
+        <a href="{% url 'course_edit' course.id %}" class="btn btn-info">Edit</a> |
+        <a href="#" onclick="delete_course('{{course.id}}')" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    function delete_course(id){
+       bootbox.confirm({
+            message: 'Are your sure you want to delete course ?',
+            buttons: {
+                confirm: {
+                    label: 'Yes',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+              if(result){
+                window.location = "/course/delete/"+id;
+              }
+            }
+        });
+    }
+</script>
+{% endblock %}

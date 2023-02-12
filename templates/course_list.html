@@ -1,0 +1,28 @@
+{% extends 'master.html' %}
+{% block title %}
+Super Dashbaord
+{% endblock %}
+{% block body %}
+<div class="row">
+    {% include 'partial/sidenavofsuper.html' %}
+    <div class="col-8">
+        <h1>Course Lists</h1>
+        {% include 'partial/message.html' %}
+        <div class="row">
+
+            {% for course in courses %}
+            <div class="col-4" style="margin-top:10px;">
+                <div class="card">
+                    <img src="{{MEDIA_URL}}{{course.course_image.url}}" class="card-img-top" style="height:150px;" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{course.course_name}}</h5>
+                        <a href="{% url 'course_details' course.id %}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

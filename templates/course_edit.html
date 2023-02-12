@@ -1,0 +1,19 @@
+{% extends 'master.html' %}
+{% block title %}
+ Create course
+{% endblock %}
+{% block body %}
+ <div class="row">
+     {% include 'partial/sidenavofsuper.html' %}
+     <div class="col-7">
+      <h1>Edit Course</h1>
+         {% include 'partial/message.html' %}
+       <form method="POST" action="#" enctype="multipart/form-data">
+           {% csrf_token %}
+           {{form.as_p}}
+           <hr/>
+           <button type="submit" style="float:right;" class="btn btn-primary">Save</button>
+       </form>
+     </div>
+ </div>
+{% endblock %}
