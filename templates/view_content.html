@@ -1,0 +1,26 @@
+{% extends 'master.html' %}
+{% block title %}
+ Content List
+{% endblock %}
+{% block body %}
+ <div class="row">
+     {% include 'partial/sidenavofsuper.html' %}
+     <div class="col-9">
+     <h1>Content List</h1>
+
+         {% include 'partial/message.html' %}
+         <table class="table">
+             <th>Content Title</th>
+             <th>Created Date</th>
+             <th>Action</th>
+             {% for content in contents %}
+              <tr>
+                  <td>{{content.content_title}}</td>
+                  <td>{{content.created_at}}</td>
+                  <td>Edit | Delete </td>
+              </tr>
+             {% endfor %}
+         </table>
+     </div>
+ </div>
+{% endblock %}
