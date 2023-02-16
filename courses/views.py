@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .forms import CourseForm,ContentForm
 from django.contrib import messages
 from .models import Course,Content
@@ -35,7 +35,8 @@ def course_details(request,id):
 
 @login_required(login_url='signin')
 def course_edit(request,id):
-    course = Course.objects.get(pk=id)
+    #course = Course.objects.get(pk=id)
+    course = get_object_or_404(Course,pk=id)
     form = CourseForm(request.POST or None,request.FILES or None,instance = course)
     if request.method=='POST':
         if form.is_valid():
@@ -48,7 +49,8 @@ def course_edit(request,id):
 
 @login_required(login_url='signin')
 def course_delete(request,id):
-    course = Course.objects.get(pk=id)
+    #course = Course.objects.get(pk=id)
+    course = get_object_or_404(Course,pk=id)
     course.delete()
     messages.add_message(request,messages.SUCCESS,"successfully deleted")
     return redirect('course_list')
@@ -75,3 +77,27 @@ def content_list(request,id):
         'contents':content
     }
     return render(request,'view_content.html',context)
+
+
+@login_required(login_url='signin')
+def content_edit(request,id):
+    #content = Content.objects.get(pk=id)
+    content = get_object_or_404(Content,pk=id)
+    form = ContentForm(request.POST or None,instance=content)
+    if form.is_valid():
+        form.save()
+        messages.add_message(request,messages.SUCCESS,"Updated successfully")
+        return redirect('content_list',content.course_id)
+    context = {
+        'form':form
+    }
+    return render(request,'content_edit.html',context)
+
+@login_required(login_url='signin')
+def delete_content(request,id):
+    #content = Content.objects.get(pk=id)
+    content = get_object_or_404(Content,pk=id)
+    course_id = content.course_id
+    content.delete()
+    messages.add_message(request,messages.SUCCESS,"Deleted Successfully")
+    return redirect('content_list',course_id)
