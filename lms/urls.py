@@ -28,4 +28,5 @@ urlpatterns = [
     path('staff/', staff_dashboard, name='staff_dashboard'),
     path('signout/', signout, name='signout'),
     path('course/',include('courses.urls')),
+    path('enroll/',include('enrollment.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

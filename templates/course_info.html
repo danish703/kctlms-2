@@ -1,0 +1,25 @@
+{% extends 'master.html' %}
+{% block  title %}
+ {{course.course_name}}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row">
+      <div class="col-8">
+          <h3 class="title">{{course.course_name}}</h3>
+            {% include 'partial/message.html' %}
+            <a href="{% url 'enroll_course' course.id %}" class="btn btn-info" style="margin:20px 0px;">Enroll Now</a>
+            <br/>
+            <img src="{{MEDIA_URL}}{{course.course_image.url}}" style="width:80%;">
+          <p>
+              {{course.description}}
+          </p>
+      </div>
+      <div class="col-4">
+          <h3 class="title">Side Nav</h3>
+      </div>
+  </div>
+</div>
+{% endblock %}

@@ -2,9 +2,14 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from courses.models import Course
 
 def home(request):
-    return render(request,'index.html')
+    courses = Course.objects.all()
+    context = {
+        'courses':courses
+    }
+    return render(request,'index.html',context)
 
 def signin(request):
     if request.method=='POST':

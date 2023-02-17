@@ -101,3 +101,11 @@ def delete_content(request,id):
     content.delete()
     messages.add_message(request,messages.SUCCESS,"Deleted Successfully")
     return redirect('content_list',course_id)
+
+def course_info(request,id):
+    course = get_object_or_404(Course,id=id)
+    context = {
+        'course':course
+    }
+    return render(request,'course_info.html',context)
+

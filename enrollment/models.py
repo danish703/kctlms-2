@@ -8,4 +8,9 @@ class Enrollment(models.Model):
     enroll_at = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.course
+        return self.course.course_name
+
+    class Meta:
+        unique_together = ('course','user')
+
+
